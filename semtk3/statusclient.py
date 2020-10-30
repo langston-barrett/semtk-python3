@@ -26,9 +26,7 @@ class StatusClient(semtkclient.SemTkClient):
         semtkclient.SemTkClient.__init__(self, serverURL, "status")
     
     def exec_get_percent_complete(self, jobId):
-        ''' 
-            returns int
-        '''
+        """returns int."""
 
         payload = {}
         payload["jobId"] = jobId
@@ -38,9 +36,7 @@ class StatusClient(semtkclient.SemTkClient):
         return self.get_simple_field_int(simple, "percentComplete")
     
     def exec_get_status_boolean(self, jobId):
-        ''' 
-            returns boolean 
-        '''
+        """returns boolean."""
 
         payload = {}
         payload["jobId"] = jobId
@@ -50,9 +46,7 @@ class StatusClient(semtkclient.SemTkClient):
         return (self.get_simple_field_str(simple, "status") == "Success")
     
     def exec_get_status_message(self, jobid):
-        ''' 
-            returns string 
-        '''
+        """returns string."""
 
         payload = {}
         payload["jobId"] = jobid
@@ -62,9 +56,7 @@ class StatusClient(semtkclient.SemTkClient):
         return self.get_simple_field_str(simple, "statusMessage") 
     
     def exec_wait_for_percent_or_msec(self, jobid, percent_complete, max_wait_msec):
-        '''
-            returns integer percent complete
-        '''
+        """returns integer percent complete."""
         payload = {}
         payload["jobId"] = jobid
         payload["percentComplete"] = percent_complete

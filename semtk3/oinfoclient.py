@@ -37,4 +37,3 @@ class OInfoClient(semtkclient.SemTkClient):
 
         res = self.post_to_table("getUriLabelTable", payload)
         return res
-    

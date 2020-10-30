@@ -41,4 +41,3 @@ class HiveClient(edcclient.EdcClient):
         }
         table = self.post_to_table("queryHive", payload)
         return table
-    

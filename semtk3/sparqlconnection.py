@@ -43,4 +43,3 @@ class SparqlConnection:
     def get_password(self):
         return self.password
         
-    

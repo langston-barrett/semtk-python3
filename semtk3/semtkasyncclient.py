@@ -22,13 +22,13 @@ semtk3_logger = logging.getLogger("semtk3")
 class SemTkAsyncClient(semtkclient.SemTkClient):
     
     def __init__(self, baseURL, service=None, status_client=None, results_client=None):
-        ''' Client for a semtk service that uses status and results services
-          
-            baseURL string - http://machine:8000, http://machine:8000/,  http://machine:8000/service, or http://machine:8000/service/
-            service string - appended to baseURL if it isn't already there
-            status_client - SemtkClient or None to use self as pass-through
-            results_client - SemtkClient or None to use self as pass-through
-        '''
+        """Client for a semtk service that uses status and results services.
+
+        baseURL string - http://machine:8000, http://machine:8000/,  http://machine:8000/service, or http://machine:8000/service/
+        service string - appended to baseURL if it isn't already there
+        status_client - SemtkClient or None to use self as pass-through
+        results_client - SemtkClient or None to use self as pass-through
+        """
         
         super(SemTkAsyncClient, self).__init__(baseURL, service)
         
@@ -38,9 +38,7 @@ class SemTkAsyncClient(semtkclient.SemTkClient):
     ######## exec functions are direct calls to the service #######
     
     def exec_get_job_completion_percentage(self, jobid):
-        ''' 
-            returns int
-        '''
+        """returns int."""
 
         payload = {}
         payload["jobID"] = jobid
@@ -50,9 +48,7 @@ class SemTkAsyncClient(semtkclient.SemTkClient):
         return self.get_simple_field_int(simple, "percent")
     
     def exec_job_status_boolean(self, jobid):
-        ''' 
-            returns boolean 
-        '''
+        """returns boolean."""
 
         payload = {}
         payload["jobID"] = jobid
@@ -62,9 +58,7 @@ class SemTkAsyncClient(semtkclient.SemTkClient):
         return (self.get_simple_field_str(simple, "status") == "Success")
     
     def exec_job_status_message(self, jobid):
-        ''' 
-            returns string 
-        '''
+        """returns string."""
 
         payload = {}
         payload["jobID"] = jobid
@@ -74,9 +68,7 @@ class SemTkAsyncClient(semtkclient.SemTkClient):
         return self.get_simple_field_str(simple, "message") 
     
     def exec_get_results_table(self, jobid):
-        ''' 
-            returns SemtkTable
-        '''
+        """returns SemtkTable."""
 
         payload = {}
         payload["jobID"] = jobid
@@ -86,9 +78,7 @@ class SemTkAsyncClient(semtkclient.SemTkClient):
         return table
     
     def exec_wait_for_percent_or_msec(self, jobid, percent_complete, max_wait_msec):
-        '''
-            returns integer percent complete
-        '''
+        """returns integer percent complete."""
         payload = {}
         payload["jobID"] = jobid
         payload["percentComplete"] = percent_complete
@@ -104,10 +94,7 @@ class SemTkAsyncClient(semtkclient.SemTkClient):
     # Use async jobID and results/status to get table
     #
     def post_async_to_table(self, endpoint, dataObj={}):
-        ''' 
-            returns SemTkTable
-            raises errors otherwise
-        '''
+        """returns SemTkTable raises errors otherwise."""
         jobid = self.post_to_jobid(endpoint, dataObj)
         semtk3_logger.debug("jobid:  " + jobid)
         self.poll_until_success(jobid)
@@ -115,11 +102,11 @@ class SemTkAsyncClient(semtkclient.SemTkClient):
         return table
         
     def poll_until_success(self, jobid):
-        ''' poll for percent complete and return if SUCCESS
-            raises RestException including if status="failure"
-            
-            returns void
-        '''
+        """poll for percent complete and return if SUCCESS raises RestException
+        including if status="failure".
+
+        returns void
+        """
         MSEC = 5000
         INCREMENT = 20
         
@@ -149,44 +136,38 @@ class SemTkAsyncClient(semtkclient.SemTkClient):
     ######## otherwise use the version attached to self          #######
     
     def post_get_table_results(self, jobid):
-        ''' get table results using results, otherwise using self
-        '''
+        """get table results using results, otherwise using self."""
         if (self.results_client):
             return self.results_client.exec_get_table_results(jobid)
         else:
             return self.exec_get_results_table(jobid)
     
     def post_get_percent_complete(self, jobid):
-        ''' get percent complete using status, otherwise using self
-        '''
+        """get percent complete using status, otherwise using self."""
         if (self.status_client):
             return self.status_client.exec_get_percent_complete(jobid)
         else:
             return self.exec_get_job_completion_percentage(jobid)
     
     def post_get_status_boolean(self, jobid):
-        ''' get status  using status client, otherwise using self
-        '''
+        """get status  using status client, otherwise using self."""
         if (self.status_client):
             return self.status_client.exec_get_status_boolean(jobid)
         else:
             return self.exec_job_status_boolean(jobid)
         
     def post_get_status_message(self, jobid):
-        ''' get status message using status client, otherwise using self
-        '''
+        """get status message using status client, otherwise using self."""
         if (self.status_client):
             return self.status_client.exec_get_status_message(jobid)
         else:
             return self.exec_job_status_message(jobid)
         
     def post_wait_for_percent_or_msec(self, jobid, percent_complete, max_wait_msec):
-        ''' 
-        '''
+        """"""
         ''' get status message using status client, otherwise using self
         '''
         if (self.status_client):
             return self.status_client.exec_wait_for_percent_or_msec(jobid, percent_complete, max_wait_msec)
         else:
             return self.exec_wait_for_percent_or_msec(jobid, percent_complete, max_wait_msec)
-        

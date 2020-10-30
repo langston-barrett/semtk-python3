@@ -1,8 +1,7 @@
-'''
-Created on May 6, 2019
+"""Created on May 6, 2019.
 
 @author: 200001934
-'''
+"""
 #
 # Copyright 2019-20 General Electric Company
 #

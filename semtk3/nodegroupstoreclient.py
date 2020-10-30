@@ -58,4 +58,3 @@ class NodegroupStoreClient(semtkclient.SemTkClient):
         self.post_to_status("storeNodeGroup", payload)
         return
             
-    

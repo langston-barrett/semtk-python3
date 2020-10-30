@@ -26,7 +26,7 @@ semtk3_logger = logging.getLogger("semtk3")
 #           unless NO_PROXY is set up on your endpoint
 #
 class RestException(Exception):
-    "Exception for errors from rest endpoints"
+    """Exception for errors from rest endpoints."""
     pass;
 
 class RestClient(object):
@@ -78,13 +78,14 @@ class RestClient(object):
         raise RestException(self.lastURL + ": " + msg + "\nDetails:\n" + c)
         
     def post(self, endpoint, dataObj={}, files=None):
-        ''' basic POST 
-               endpoint - string
-               dataObj - dict will be converted to json for the post  (default {})
-                
-               returns string - response content
-               raises RestException if response is not OK
-        '''
+        """basic POST.
+
+        endpoint - string
+        dataObj - dict will be converted to json for the post  (default {})
+
+        returns string - response content
+        raises RestException if response is not OK
+        """
         
         self.lastURL = self.baseURL + endpoint
         semtk3_logger.debug("Posting to " + self.lastURL + "...")

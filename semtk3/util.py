@@ -23,11 +23,9 @@ import uuid
 import os
 
 def download_url(url, baseDir):
-    '''
-        download a URL contents to baseDir
-        attempt to use filename from headers, else generate a guid
-        append _0 _1 etc to base filename to avoid duplicates
-    '''
+    """download a URL contents to baseDir attempt to use filename from headers,
+    else generate a guid append _0 _1 etc to base filename to avoid
+    duplicates."""
     
     # perform download into r
     r = requests.get(url)

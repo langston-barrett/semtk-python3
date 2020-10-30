@@ -29,9 +29,7 @@ class ResultsClient(SemTkClient):
         super(ResultsClient, self).__init__(serverURL, "results")
     
     def exec_get_table_results(self, jobId):
-        ''' 
-            returns SemtkTable
-        '''
+        """returns SemtkTable."""
 
         payload = {}
         payload["jobId"] = jobId
@@ -41,9 +39,7 @@ class ResultsClient(SemTkClient):
         return table
     
     def exec_get_json_blob_results(self, jobId):
-        ''' 
-            returns SemtkTable
-        '''
+        """returns SemtkTable."""
 
         payload = {}
         payload["jobId"] = jobId
@@ -53,15 +49,11 @@ class ResultsClient(SemTkClient):
         return json.loads(content_str)
     
     def exec_get_binary_file(self, fileId, baseDir):
-        '''
-            Download file into baseDir
-            return the path
-        '''
+        """Download file into baseDir return the path."""
         url = self.baseURL + "/getBinaryFile/" + fileId
         return util.download_url(url, baseDir)
     
             
         
         
-    
     

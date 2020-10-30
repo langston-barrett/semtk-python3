@@ -33,8 +33,7 @@ semtk3_logger = logging.getLogger("semtk3")
 class SemTkClient(restclient.RestClient):
     
     def _check_status(self, content):
-        ''' check content is a dict, has status=="success"
-        '''
+        """check content is a dict, has status=="success"."""
         if not isinstance(content, dict):
             self.raise_exception("Can't process content from rest service")
         
@@ -45,16 +44,14 @@ class SemTkClient(restclient.RestClient):
             self.raise_exception("Rest service call did not succeed ")
 
     def _check_simple(self, content):
-        ''' perform all checks on content through checking for simpleresults 
-        '''
+        """perform all checks on content through checking for simpleresults."""
         self._check_status(content)
         
         if "simpleresults" not in content.keys():
             self.raise_exception("Rest service did not return simpleresults")
             
     def _check_table(self, content):
-        ''' perform all checks on content through checking for table 
-        '''
+        """perform all checks on content through checking for table."""
         self._check_status(content)
         
         if  "table" not in content.keys():
@@ -64,8 +61,7 @@ class SemTkClient(restclient.RestClient):
             self.raise_exception("Rest service table does not contain @table")
     
     def _check_record_process(self, content):
-        ''' perform all checks on content through checking for table 
-        '''
+        """perform all checks on content through checking for table."""
         self._check_status(content)
 
         if  "recordProcessResults" not in content.keys():
@@ -73,18 +69,15 @@ class SemTkClient(restclient.RestClient):
     
     
     def get_simple_field(self, simple_res, field):
-        ''' get a simple field with REST error handling
-        '''
+        """get a simple field with REST error handling."""
         if field not in simple_res.keys():
             self.raise_exception("Rest service did not return simple result " + field)
         
         return simple_res[field]
     
     def get_simple_field_int(self, simple_res, field):
-        ''' get integer simple results field
-            returns int
-            raises RestException on type or missing field
-        '''
+        """get integer simple results field returns int raises RestException on
+        type or missing field."""
         try:
             f = self.get_simple_field(simple_res, field)
             return int(f)
@@ -93,18 +86,14 @@ class SemTkClient(restclient.RestClient):
             self.raise_exception("Simple results field " + field + " expecting integer, found " + f)
             
     def get_simple_field_str(self, simple_res, field):
-        ''' get string from simple result
-            returns string
-            raises RestException on type or missing field
-        '''
+        """get string from simple result returns string raises RestException on
+        type or missing field."""
         f = self.get_simple_field(simple_res, field)
         return str(f)
     
     def ping(self):
-        '''
-            logger.INFO(success)  or  logger.ERROR(error)
-            returns True (success) or False (failure)
-        '''
+        """logger.INFO(success)  or  logger.ERROR(error) returns True (success)
+        or False (failure)"""
         try:
             res = self.post_to_simple("serviceInfo/ping")
             semtk3_logger.info(self.baseURL + self.get_simple_field_str(res, "available"))
@@ -160,9 +149,6 @@ class SemTkClient(restclient.RestClient):
         return record_process
     
     def post_to_jobid(self, endpoint, dataObj={}):
-        ''' 
-            returns string jobid
-            raises errors otherwise
-        '''
+        """returns string jobid raises errors otherwise."""
         simple_res = self.post_to_simple(endpoint, dataObj)
         return self.get_simple_field_str(simple_res, "JobId")

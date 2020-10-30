@@ -35,9 +35,8 @@ JSON_TYPE = "type"
 class SemtkTable():
     
     def __init__(self, table_dict):
-        ''' 
-            Create a SemtkTable from the @table results from a Semtk REST service
-        '''
+        """Create a SemtkTable from the @table results from a Semtk REST
+        service."""
         self.dict = table_dict
         
     # create a table with no checking so far
@@ -71,15 +70,11 @@ class SemtkTable():
         return self.dict[JSON_KEY_COL_TYPES]
     
     def get_column_type(self, col_name):
-        ''' 
-            raises ValueError on bad col_name
-        '''
+        """raises ValueError on bad col_name."""
         return self.get_column_types() [ self.get_column_index(col_name) ]
 
     def get_column_index(self, col_name):
-        ''' get column index
-            raises ValueError
-        '''
+        """get column index raises ValueError."""
         return self.get_column_names().index(col_name)
     
     def has_column(self, col_name):
@@ -156,7 +151,7 @@ class SemtkTable():
         return re.sub("[\r\n]+", "\n", si.getvalue())  # ghetto improper use of io.StringIO
     
     def get_rows(self):
-        ''' returns array of arrays '''
+        """returns array of arrays."""
         ret = []
         for r in range(self.get_num_rows()): 
             row = []
@@ -169,4 +164,3 @@ class SemtkTable():
     
     def to_json_str(self):
         return json.dumps(self.dict, indent=4, sort_keys=True)
-    

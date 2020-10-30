@@ -27,9 +27,8 @@ class RuntimeConstraint():
     OP_VALUEBETWEENUNINCLUSIVE = "VALUEBETWEENUNINCLUSIVE"
     
     def __init__(self, sparqlId, operator, operand_list):
-        ''' 
-            Create a SemtkTable from the @table results from a Semtk REST service
-        '''
+        """Create a SemtkTable from the @table results from a Semtk REST
+        service."""
         self.sparqlId = sparqlId
         self.operator = operator
         self.operand_list = operand_list
